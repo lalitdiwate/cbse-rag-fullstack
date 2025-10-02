@@ -9,7 +9,7 @@ services:
     name: cbse-rag-api
     runtime: python
     region: singapore
-    plan: starter
+    plan: free
     branch: main
     buildCommand: |
       pip install --upgrade pip
@@ -60,4 +60,5 @@ services:
         destination: /index.html
     envVars:
       - key: REACT_APP_API_URL
+
         value: https://cbse-rag-api.onrender.com

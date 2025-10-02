@@ -1,0 +1,63 @@
+# Render Blueprint for CBSE RAG System
+# Complete deployment with Frontend + Backend
+
+services:
+  # ============================================
+  # Backend API (FastAPI + RAG Pipeline)
+  # ============================================
+  - type: web
+    name: cbse-rag-api
+    runtime: python
+    region: singapore
+    plan: starter
+    branch: main
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+      python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"
+    startCommand: uvicorn api:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"
+      - key: APP_ENV
+        value: production
+      - key: DEBUG
+        value: false
+      # REQUIRED: Add these in Render Dashboard manually
+      - key: OPENROUTER_API_KEY
+        sync: false  # Set manually (sensitive)
+      - key: DEFAULT_MODEL
+        value: openai/gpt-4-turbo
+      - key: CORS_ORIGINS
+        value: https://cbse-rag-frontend.onrender.com,http://localhost:3000
+  
+  # ============================================
+  # Frontend (React Static Site)
+  # ============================================
+  - type: web
+    name: cbse-rag-frontend
+    runtime: static
+    region: singapore
+    branch: main
+    buildCommand: |
+      cd frontend
+      npm install
+      npm run build
+    staticPublishPath: frontend/build
+    pullRequestPreviewsEnabled: true
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: SAMEORIGIN
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://cbse-rag-api.onrender.com

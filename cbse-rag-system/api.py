@@ -51,7 +51,7 @@ class QueryRequest(BaseModel):
     question: str = Field(..., min_length=1, max_length=2000)
     grade: int = Field(..., ge=1, le=12)
     subject: str
-    llm_model: str = Field(default="openai/gpt-4-turbo")
+    llm_model: str = Field(default="deepseek/deepseek-chat-v3.1:free")
     temperature: float = Field(default=0.7, ge=0, le=2)
     use_reranking: bool = True
     use_hyde: bool = True
@@ -81,7 +81,8 @@ async def startup_event():
     print("Starting CBSE RAG System Backend")
     print("=" * 60)
     
-    api_key = os.getenv("OPENROUTER_API_KEY")
+    #api_key = os.getenv("OPENROUTER_API_KEY")
+    api_keu = "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"
     if not api_key:
         print("WARNING: OPENROUTER_API_KEY not found in environment")
         print("Please set it in .env file or environment variables")
@@ -90,7 +91,7 @@ async def startup_event():
     try:
         rag_pipeline = RAGPipeline(
             openrouter_api_key=api_key,
-            llm_model=os.getenv("DEFAULT_MODEL", "openai/gpt-4-turbo"),
+            llm_model=os.getenv("DEFAULT_MODEL", "deepseek/deepseek-chat-v3.1:free"),
             use_reranking=True,
             use_hyde=True
         )
@@ -429,5 +430,6 @@ if __name__ == "__main__":
         reload=True
 
     )
+
 
 

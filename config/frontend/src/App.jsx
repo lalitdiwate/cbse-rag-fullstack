@@ -8,7 +8,8 @@ const getApiUrl = () => {
     return window.REACT_APP_API_URL;
   }
   // Default for local development and artifact preview
-  return 'http://localhost:8000';
+  //return 'http://localhost:8000';
+  return 'http://80.225.218.170:8000';
 };
 
 const API_URL = getApiUrl();
@@ -746,5 +747,6 @@ function FeatureBadge({ icon, label, active }) {
 
 
 export default App;
+
 
 

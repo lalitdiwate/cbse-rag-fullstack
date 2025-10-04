@@ -1,6 +1,8 @@
 services:
   backend:
     build: ./cbse-rag-system
+    env_file:
+      - ./cbse-rag-system/.env
     ports:
       - "8000:8000"
     networks:

@@ -27,7 +27,7 @@ app = FastAPI(
 CORS_ORIGINS = os.getenv("CORS_ORIGINS", "http://localhost:3000").split(",")
 app.add_middleware(
     CORSMiddleware,
-    //allow_origins=CORS_ORIGINS,
+    #allow_origins=CORS_ORIGINS,
     allow_origins=["*"],  # You can restrict this to your domain for production
     allow_credentials=True,
     allow_methods=["*"],
@@ -403,3 +403,4 @@ if __name__ == "__main__":
         reload=True
 
     )
+

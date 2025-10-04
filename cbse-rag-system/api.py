@@ -12,6 +12,8 @@ from datetime import datetime
 import asyncio
 from pathlib import Path
 import shutil
+from fastapi.responses import JSONResponse
+
 
 # Import the RAG pipeline
 from simple_rag import RAGPipeline, DocumentProcessor, print_result
@@ -365,6 +367,7 @@ def calculate_avg_response_time() -> float:
 
 
 # Error handlers
+"""
 @app.exception_handler(404)
 async def not_found_handler(request, exc):
     return {
@@ -381,6 +384,29 @@ async def internal_error_handler(request, exc):
         "message": "An unexpected error occurred",
         "details": str(exc)
     }
+"""
+@app.exception_handler(404)
+async def not_found_handler(request, exc):
+    return JSONResponse(
+        status_code=404,
+        content={
+            "error": "Not Found",
+            "message": "The requested resource was not found",
+            "path": str(request.url)
+        }
+    )
+
+@app.exception_handler(500)
+async def internal_error_handler(request, exc):
+    return JSONResponse(
+        status_code=500,
+        content={
+            "error": "Internal Server Error",
+            "message": "An unexpected error occurred",
+            "details": str(exc)
+        }
+    )
+
 
 
 if __name__ == "__main__":
@@ -403,4 +429,5 @@ if __name__ == "__main__":
         reload=True
 
     )
+
 

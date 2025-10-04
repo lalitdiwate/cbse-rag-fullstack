@@ -240,7 +240,7 @@ class Reranker:
 class OpenRouterLLM:
     """OpenRouter.ai LLM integration"""
     
-    def __init__(self, api_key: str, model: str = "openai/gpt-4"):
+    def __init__(self, api_key: str, model: str = "deepseek/deepseek-chat-v3.1:free"):
         self.api_key = api_key
         self.model = model
         self.client = openai.OpenAI(
@@ -314,7 +314,7 @@ class RAGPipeline:
     def __init__(
         self,
         openrouter_api_key: str,
-        llm_model: str = "openai/gpt-4",
+        llm_model: str = "deepseek/deepseek-chat-v3.1:free",
         embedding_model: str = "all-MiniLM-L6-v2",
         use_reranking: bool = True,
         use_hyde: bool = True
@@ -481,7 +481,8 @@ def main():
     """Main function - CLI interface"""
     
     # Get API key
-    api_key = os.getenv("OPENROUTER_API_KEY")
+    #api_key = os.getenv("OPENROUTER_API_KEY")
+    api_key = "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"
     if not api_key:
         print("Error: OPENROUTER_API_KEY not found in environment")
         print("Please create a .env file with: OPENROUTER_API_KEY=your_key_here")
@@ -491,7 +492,7 @@ def main():
     # Initialize RAG pipeline
     rag = RAGPipeline(
         openrouter_api_key=api_key,
-        llm_model="openai/gpt-4-turbo",  # or "anthropic/claude-3-opus", "google/gemini-pro"
+        llm_model= "deepseek/deepseek-chat-v3.1:free",#"openai/gpt-4-turbo",  # or "anthropic/claude-3-opus", "google/gemini-pro"
         use_reranking=True,
         use_hyde=True
     )
@@ -603,4 +604,5 @@ def main():
             print(f"Error: {e}")
 
 if __name__ == "__main__":
+
     main()

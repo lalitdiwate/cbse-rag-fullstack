@@ -481,8 +481,8 @@ def main():
     """Main function - CLI interface"""
     
     # Get API key
-    #api_key = os.getenv("OPENROUTER_API_KEY")
-    api_key = "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"
+    api_key = os.getenv("OPENROUTER_API_KEY")
+    #api_key = "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"
     if not api_key:
         print("Error: OPENROUTER_API_KEY not found in environment")
         print("Please create a .env file with: OPENROUTER_API_KEY=your_key_here")
@@ -606,3 +606,4 @@ def main():
 if __name__ == "__main__":
 
     main()
+

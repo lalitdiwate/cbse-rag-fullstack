@@ -83,6 +83,7 @@ async def startup_event():
     
     api_key = os.getenv("OPENROUTER_API_KEY")
     #api_keu = "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"
+    print(f"api_key : {api_key}")
     if not api_key:
         print("WARNING: OPENROUTER_API_KEY not found in environment")
         print("Please set it in .env file or environment variables")
@@ -430,6 +431,7 @@ if __name__ == "__main__":
         reload=True
 
     )
+
 
 
 

@@ -29,8 +29,8 @@ app = FastAPI(
 CORS_ORIGINS = os.getenv("CORS_ORIGINS", "http://localhost:3000").split(",")
 app.add_middleware(
     CORSMiddleware,
-    #allow_origins=CORS_ORIGINS,
-    allow_origins=["*"],  # You can restrict this to your domain for production
+    allow_origins=CORS_ORIGINS,
+    #allow_origins=["*"],  # You can restrict this to your domain for production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -81,8 +81,8 @@ async def startup_event():
     print("Starting CBSE RAG System Backend")
     print("=" * 60)
     
-    #api_key = os.getenv("OPENROUTER_API_KEY")
-    api_keu = "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"
+    api_key = os.getenv("OPENROUTER_API_KEY")
+    #api_keu = "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"
     if not api_key:
         print("WARNING: OPENROUTER_API_KEY not found in environment")
         print("Please set it in .env file or environment variables")

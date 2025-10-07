@@ -93,6 +93,7 @@ async def startup_event():
         rag_pipeline = RAGPipeline(
             openrouter_api_key=api_key,
             llm_model=os.getenv("DEFAULT_MODEL", "deepseek/deepseek-chat-v3.1:free"),
+            embedding_model="all-MiniLM-L6-v2",
             use_reranking=True,
             use_hyde=True
         )
@@ -431,6 +432,7 @@ if __name__ == "__main__":
         reload=True
 
     )
+
 
 
 
